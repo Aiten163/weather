@@ -9,7 +9,7 @@ const loading = ref(true)
 const error = ref(null)
 const selectedDayIndex = ref(0)
 
-// Функция для получения координат по названию города
+// получение координат по названию города
 const getCoordinates = async (city) => {
   try {
     const response = await fetch(
@@ -41,7 +41,7 @@ const fetchWeather = async (city = 'Москва') => {
     // Получаем координаты города
     const coordinates = await getCoordinates(city)
 
-    // Получаем погоду по координатам - УВЕЛИЧИВАЕМ ДО 14 ДНЕЙ
+    // Получаем погоду по координатам
     const response = await fetch(
         `https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min,relative_humidity_2m_max,wind_speed_10m_max&timezone=auto&forecast_days=14`
     )
@@ -50,7 +50,6 @@ const fetchWeather = async (city = 'Москва') => {
 
     const data = await response.json()
 
-    // Форматируем данные для нашего приложения
     weatherData.value = {
       current: {
         temperature: data.current.temperature_2m,
@@ -78,17 +77,14 @@ const fetchWeather = async (city = 'Москва') => {
   }
 }
 
-// Функция поиска
 const handleSearch = (city) => {
   fetchWeather(city)
 }
 
-// Функция для выбора дня
 const handleDaySelect = (index) => {
   selectedDayIndex.value = index
 }
 
-// Определяем тип погоды для анимации
 const weatherType = computed(() => {
   if (!weatherData.value) return 'default'
 
@@ -96,7 +92,6 @@ const weatherType = computed(() => {
       ? weatherData.value.current.weather_code
       : weatherData.value.daily.weather_code[selectedDayIndex.value]
 
-  // Группируем коды погоды по типам анимаций
   if (code === 0 || code === 1) return 'sunny'        // Ясно
   if (code === 2) return 'partly-cloudy'              // Переменная облачность
   if (code === 3) return 'cloudy'                     // Пасмурно
@@ -116,7 +111,6 @@ onMounted(() => {
 
 <template>
   <div class="app-container" :class="weatherType">
-    <!-- Анимированный фон -->
     <div class="weather-background">
       <!-- Солнечные лучи -->
       <div class="sun-rays" v-if="weatherType === 'sunny'">
@@ -202,7 +196,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Стили остаются без изменений */
 .app-container {
   min-height: 100vh;
   padding: 1rem;
@@ -214,7 +207,7 @@ onMounted(() => {
   transition: all 0.5s ease;
 }
 
-/* Базовые градиенты для разных типов погоды */
+
 .app-container.sunny {
   background: linear-gradient(135deg, #87CEEB 0%, #98FB98 50%, #87CEEB 100%);
 }

@@ -18,9 +18,8 @@ const props = defineProps<{
 const emit = defineEmits(['day-select'])
 
 const currentSlide = ref(0)
-const slidesToShow = ref(7) // УВЕЛИЧИЛИ КОЛИЧЕСТВО ОДНОВРЕМЕННО ОТОБРАЖАЕМЫХ ДНЕЙ
+const slidesToShow = ref(7)
 
-// Подготавливаем данные для отображения
 const dailyForecast = computed(() => {
   if (!props.weatherData?.daily?.time) return []
   return props.weatherData.daily.time.map((time, index) => ({
@@ -117,7 +116,6 @@ const isDaySelected = (index: number) => {
   return props.selectedDayIndex === currentSlide.value + index
 }
 
-// Адаптивное количество слайдов
 const updateSlidesToShow = () => {
   if (window.innerWidth < 520) {
     slidesToShow.value = 5 // УВЕЛИЧИЛИ ДЛЯ МОБИЛЬНЫХ
@@ -220,11 +218,11 @@ onUnmounted(() => {
 .days-carousel {
   display: flex;
   align-items: center;
-  gap: 0.75rem; /* УМЕНЬШИЛИ РАССТОЯНИЕ ДЛЯ БОЛЬШЕГО КОЛИЧЕСТВА ДНЕЙ */
+  gap: 0.75rem;
 }
 
 .carousel-btn {
-  width: 32px; /* НЕМНОГО УМЕНЬШИЛИ КНОПКИ ДЛЯ ЭКОНОМИИ МЕСТА */
+  width: 32px;
   height: 32px;
   border: 1px solid #e8e6e1;
   background: #ffffff;
@@ -260,7 +258,7 @@ onUnmounted(() => {
 
 .days-grid {
   display: grid;
-  gap: 0.5rem; /* УМЕНЬШИЛИ РАССТОЯНИЕ МЕЖДУ КАРТОЧКАМИ */
+  gap: 0.5rem;
   flex: 1;
 }
 
@@ -268,7 +266,7 @@ onUnmounted(() => {
   background: #ffffff;
   border: 1px solid #f0efec;
   border-radius: 8px;
-  padding: 0.7rem 0.4rem; /* УМЕНЬШИЛИ ВНУТРЕННИЕ ОТСТУПЫ */
+  padding: 0.7rem 0.4rem;
   text-align: center;
   transition: all 0.2s ease;
   color: #6c6b67;
@@ -312,7 +310,7 @@ onUnmounted(() => {
 }
 
 .day-name {
-  font-size: 0.75rem; /* НЕМНОГО УМЕНЬШИЛИ ШРИФТ */
+  font-size: 0.75rem;
   font-weight: 500;
   color: #4a4946;
   margin-bottom: 0.2rem;
@@ -325,7 +323,7 @@ onUnmounted(() => {
 }
 
 .day-emoji {
-  font-size: 1.2rem; /* НЕМНОГО УМЕНЬШИЛИ ЭМОДЗИ */
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
   opacity: 0.9;
 }
@@ -334,7 +332,7 @@ onUnmounted(() => {
   display: flex;
   justify-content: center;
   gap: 0.25rem;
-  font-size: 0.8rem; /* НЕМНОГО УМЕНЬШИЛИ ШРИФТ ТЕМПЕРАТУРЫ */
+  font-size: 0.8rem;
 }
 
 .temp-high {

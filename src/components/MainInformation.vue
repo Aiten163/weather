@@ -61,7 +61,6 @@ const getWeatherInfo = (code: number) => {
   return weatherMap[code] || { description: 'Неизвестно', emoji: '🌈' }
 }
 
-// Форматирование даты
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)
   const options: Intl.DateTimeFormatOptions = {
@@ -72,10 +71,8 @@ const formatDate = (dateString: string) => {
   return date.toLocaleDateString('ru-RU', options)
 }
 
-// Получаем данные для выбранного дня
 const selectedDayData = computed(() => {
   if (props.selectedDayIndex === 0) {
-    // Сегодня - используем текущие данные
     return {
       temperature: props.weatherData.current.temperature,
       feels_like: props.weatherData.current.feels_like,
@@ -86,7 +83,6 @@ const selectedDayData = computed(() => {
       isToday: true
     }
   } else {
-    // Будущие дни - используем дневные данные
     const index = props.selectedDayIndex
     return {
       temperature: (props.weatherData.daily.temperature_2m_max[index] + props.weatherData.daily.temperature_2m_min[index]) / 2,
