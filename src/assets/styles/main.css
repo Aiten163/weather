@@ -1,0 +1,193 @@
+/* Основные стили для погодного дашборда */
+
+/* Кастомные переменные Bootstrap */
+:root {
+    --bs-primary: #4361ee;
+    --bs-secondary: #7209b7;
+    --bs-success: #4cc9f0;
+    --bs-info: #3a0ca3;
+    --bs-warning: #f72585;
+    --bs-danger: #ef233c;
+
+    /* Темная тема */
+    --dark-bg: #121212;
+    --dark-card: #1e1e1e;
+    --dark-text: #e0e0e0;
+    --dark-border: #333333;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes windArrow {
+    0% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(5deg);
+    }
+    75% {
+        transform: rotate(-5deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* Основные стили */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Стили для карточек погоды */
+.weather-card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease-out;
+}
+
+.weather-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Индикаторы */
+.humidity-indicator {
+    height: 6px;
+    background: linear-gradient(to right, #4cc9f0, #4361ee);
+    border-radius: 3px;
+    margin-top: 5px;
+}
+
+.pressure-indicator {
+    position: relative;
+    height: 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.pressure-value {
+    height: 100%;
+    background: linear-gradient(to right, #ef233c, #f72585, #4cc9f0);
+    border-radius: 4px;
+}
+
+/* Анимация стрелки ветра */
+.wind-arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    animation: windArrow 2s infinite;
+}
+
+/* Темная тема */
+.theme-dark .card {
+    background-color: var(--dark-card);
+    border-color: var(--dark-border);
+}
+
+.theme-dark .text-muted {
+    color: #aaa !important;
+}
+
+.theme-dark .navbar {
+    background-color: var(--dark-card) !important;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .display-1 {
+        font-size: 3rem;
+    }
+
+    .weather-icon-lg {
+        font-size: 2.5rem;
+    }
+}
+
+/* Специальные классы для погодных иконок */
+.weather-icon {
+    display: inline-block;
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+
+.weather-icon-lg {
+    font-size: 4rem;
+}
+
+/* Прогресс бары */
+.progress {
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Кастомные кнопки */
+.btn-weather {
+    background: linear-gradient(135deg, #4361ee, #3a0ca3);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-weather:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+}
+
+/* Стили для списка городов */
+.city-list-item {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.city-list-item:hover {
+    background-color: rgba(67, 97, 238, 0.1);
+    border-left-color: #4361ee;
+    padding-left: 15px;
+}
+
+.city-list-item.active {
+    background-color: rgba(67, 97, 238, 0.15);
+    border-left-color: #4361ee;
+    font-weight: bold;
+}
+
+/* Стили для графиков */
+.weather-chart {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.theme-dark .weather-chart {
+    background: var(--dark-card);
+}
+
+/* Утилиты */
+.text-gradient {
+    background: linear-gradient(135deg, #4361ee, #f72585);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.shadow-soft {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
