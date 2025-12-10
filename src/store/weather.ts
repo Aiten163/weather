@@ -139,15 +139,26 @@ export const useWeatherStore = defineStore('weather', () => {
             currentWeather.value = weather
             forecast.value = forecastData
 
-            // Теперь у нас есть реальный ID из ответа погоды
             if (weather) {
+                // Убедитесь, что selectedCity устанавливается корректно
                 selectedCity.value = {
-                    id: weather.id, // Реальный ID OpenWeather
+                    id: weather.id,
                     name: weather.name,
                     country: weather.sys.country,
                     coord: weather.coord,
+                    state: weather.sys?.state || '',
                     hasRealId: true
                 }
+
+                // Дополнительно сохраняем в localStorage
+                localStorage.setItem('last-searched-city', JSON.stringify({
+                    id: weather.id,
+                    name: weather.name,
+                    country: weather.sys.country,
+                    lat: weather.coord.lat,
+                    lon: weather.coord.lon
+                }))
+
                 saveSelectedCity()
             }
         } catch (err) {

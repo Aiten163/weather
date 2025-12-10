@@ -8,14 +8,17 @@
     </div>
 
     <div class="card-body">
-      <div v-if="citiesStore.favoriteCities.length === 0" class="text-center py-4">
+      <!-- ИСПРАВЛЕНА ПРОВЕРКА: Добавлена проверка на существование и Array.isArray -->
+      <div v-if="!favoriteCities || !Array.isArray(favoriteCities) || favoriteCities.length === 0"
+           class="text-center py-4">
         <i class="bi bi-heart text-muted mb-3" style="font-size: 2em;"></i>
         <p class="text-muted">{{ t('noCitiesAdded') }}</p>
         <small class="text-muted">{{ t('searchToAdd') }}</small>
       </div>
 
       <div v-else class="list-group">
-        <button v-for="city in citiesStore.favoriteCities"
+        <!-- ИСПРАВЛЕНО: используем safeFavoriteCities -->
+        <button v-for="city in safeFavoriteCities"
                 :key="city.id"
                 class="list-group-item list-group-item-action city-list-item"
                 :class="{ '': isCurrentCity(city.id) }"
@@ -36,7 +39,6 @@
         </button>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -45,10 +47,26 @@ import { useWeatherStore } from '@/store/weather'
 import { useCitiesStore } from '@/store/cities'
 import { useTranslation } from '@/composables/useTranslation'
 import type { City } from '@/types/weather'
+import { computed } from 'vue'
 
 const weatherStore = useWeatherStore()
 const citiesStore = useCitiesStore()
 const { t } = useTranslation()
+
+// ИСПРАВЛЕНО: Создаем безопасные computed свойства
+const favoriteCities = computed(() => citiesStore.favoriteCities)
+
+const safeFavoriteCities = computed(() => {
+  const cities = favoriteCities.value
+  if (!cities || !Array.isArray(cities)) {
+    return []
+  }
+  return cities
+})
+
+const hasFavorites = computed(() => {
+  return safeFavoriteCities.value.length > 0
+})
 
 const isCurrentCity = (cityId: number) => {
   return weatherStore.selectedCity?.id === cityId
@@ -102,5 +120,7 @@ const refreshAll = async () => {
   transition: opacity 0.2s ease;
 }
 
-
+.city-list-item:hover .actions {
+  opacity: 1;
+}
 </style>

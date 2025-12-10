@@ -157,7 +157,6 @@
                   </div>
                 </div>
 
-                <!-- Кнопка избранного -->
               </div>
             </div>
 
@@ -531,7 +530,11 @@ const hourlyData = computed(() => {
 
 const isCurrentFavorite = computed(() => {
   if (!weatherStore.selectedCity) return false
-  return citiesStore.isFavorite(weatherStore.selectedCity.id)
+
+  const cityId = weatherStore.selectedCity.id
+  if (!cityId) return false
+
+  return citiesStore.isFavorite(cityId)
 })
 
 // Функции форматирования
@@ -716,13 +719,70 @@ const useDefaultCity = async () => {
 }
 
 const toggleFavorite = () => {
-  if (!weatherStore.selectedCity) return
+  console.log('Toggle favorite called')
+  console.log('Selected city:', weatherStore.selectedCity)
+  console.log('Current weather:', weatherStore.currentWeather)
 
-  if (isCurrentFavorite.value) {
-    citiesStore.removeFromFavorites(weatherStore.selectedCity.id)
-  } else {
-    citiesStore.addToFavorites(weatherStore.selectedCity)
+  if (!weatherStore.selectedCity) {
+    console.error('No selected city to toggle favorite')
+    return
   }
+
+  const cityToToggle = {
+    id: weatherStore.selectedCity.id,
+    name: weatherStore.selectedCity.name,
+    country: weatherStore.selectedCity.country,
+    lat: weatherStore.selectedCity.coord?.lat || weatherStore.selectedCity.lat,
+    lon: weatherStore.selectedCity.coord?.lon || weatherStore.selectedCity.lon,
+    state: weatherStore.selectedCity.state || ''
+  }
+
+  console.log('City to toggle:', cityToToggle)
+
+  // Используем метод toggleFavorite из citiesStore
+  citiesStore.toggleFavorite(cityToToggle)
+
+  // Или явно добавляем/удаляем:
+  // if (isCurrentFavorite.value) {
+  //   citiesStore.removeFromFavorites(cityToToggle.id)
+  // } else {
+  //   citiesStore.addToFavorites(cityToToggle)
+  // }
+
+  console.log('All favorites after toggle:', citiesStore.favoriteCities)
+}
+const getWeatherDescription = (description: string): string => {
+  const weatherDescriptions: Record<string, Record<string, string>> = {
+    en: {
+      'overcast clouds': 'Overcast',
+      'broken clouds': 'Broken clouds',
+      'scattered clouds': 'Scattered clouds',
+      'few clouds': 'Few clouds',
+      'clear sky': 'Clear sky',
+      'light rain': 'Light rain',
+      'moderate rain': 'Moderate rain',
+      'heavy rain': 'Heavy rain',
+      'light snow': 'Light snow',
+      'snow': 'Snow',
+      'thunderstorm with rain': 'Thunderstorm with rain',
+    },
+    ru: {
+      'overcast clouds': 'Пасмурно',
+      'broken clouds': 'Рассеянная облачность',
+      'scattered clouds': 'Переменная облачность',
+      'few clouds': 'Небольшая облачность',
+      'clear sky': 'Ясное небо',
+      'light rain': 'Небольшой дождь',
+      'moderate rain': 'Умеренный дождь',
+      'heavy rain': 'Сильный дождь',
+      'light snow': 'Небольшой снег',
+      'snow': 'Снег',
+      'thunderstorm with rain': 'Гроза с дождем',
+    }
+  }
+
+  const lang = settingsStore.language as keyof typeof weatherDescriptions
+  return weatherDescriptions[lang]?.[description] || description
 }
 </script>
 

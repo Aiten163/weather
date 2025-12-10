@@ -2,11 +2,13 @@
 export const translations = {
     en: {
         // Header
+        title: 'Weather Dashboard',
         dashboard: 'Dashboard',
         settings: 'Settings',
 
         // Current Weather
         feelsLike: 'Feels like',
+        feelsLikeShort: 'Feels',
         min: 'Min',
         max: 'Max',
         wind: 'Wind',
@@ -16,13 +18,53 @@ export const translations = {
         sunset: 'Sunset',
         noWeatherData: 'No weather data available',
         gust: 'Gust',
-
+        pressure: 'Pressure',
+        cloudiness: 'Cloudiness',
+        precipitation: 'Precipitation',
         myLocation: 'My Location',
 
+        // Days and time
+        now: 'Now',
+        today: 'Today',
+        tomorrow: 'Tomorrow',
+        monday: 'Monday',
+        tuesday: 'Tuesday',
+        wednesday: 'Wednesday',
+        thursday: 'Thursday',
+        friday: 'Friday',
+        saturday: 'Saturday',
+        sunday: 'Sunday',
+        // Abbreviated days
+        mon: 'Mon',
+        tue: 'Tue',
+        wed: 'Wed',
+        thu: 'Thu',
+        fri: 'Fri',
+        sat: 'Sat',
+        sun: 'Sun',
+
+        // Months (abbreviated)
+        jan: 'Jan',
+        feb: 'Feb',
+        mar: 'Mar',
+        apr: 'Apr',
+        may: 'May',
+        jun: 'Jun',
+        jul: 'Jul',
+        aug: 'Aug',
+        sep: 'Sep',
+        oct: 'Oct',
+        nov: 'Nov',
+        dec: 'Dec',
+
         // Forecast
-        dailyForecast: '7-Day Forecast',  // Исправлено с 5 на 7
+        dailyForecast: '7-Day Forecast',
         hourlyForecast: 'Hourly Forecast',
         noForecastData: 'No forecast data available',
+        next24Hours: 'Next 24 hours',
+        weatherDetails: 'Weather Details',
+        detailedForecast: 'Detailed Forecast',
+        selectDayForDetails: 'Select a day to view detailed forecast',
 
         // City Management
         addCity: 'Add City',
@@ -30,11 +72,22 @@ export const translations = {
         searchCity: 'Search city...',
         confirmRemove: 'Are you sure you want to remove this city?',
         favoriteCities: 'Favorite Cities',
+        favorites: 'Favorites',
         noCitiesAdded: 'No cities added yet',
         searchToAdd: 'Use search to add cities',
         useMyLocation: 'Use My Location',
         locationError: 'Failed to get location',
         viewDetails: 'View Details',
+        addToFavorites: 'Add to favorites',
+        removeFromFavorites: 'Remove from favorites',
+        addToDashboard: 'Add to dashboard',
+        cityAlreadyAdded: 'City is already in your list',
+        maxCitiesReached: 'Maximum number of cities reached',
+
+        // Search
+        searchResults: 'Search Results',
+        searching: 'Searching...',
+        cityNotFound: 'City not found',
 
         // Settings
         temperature: 'Temperature',
@@ -51,6 +104,18 @@ export const translations = {
         clearCache: 'Clear Cache',
         exportSettings: 'Export Settings',
         confirmClearCache: 'Are you sure you want to clear all cached data?',
+        saveChanges: 'Save changes',
+        cancel: 'Cancel',
+        confirm: 'Confirm',
+        timeFormat: 'Time Format',
+        dateFormat: 'Date Format',
+        twelveHour: '12-hour format',
+        twentyFourHour: '24-hour format',
+        showSeconds: 'Show seconds',
+        showWeekNumbers: 'Show week numbers',
+        startWeekOn: 'Start week on',
+        mondayStart: 'Monday',
+        sundayStart: 'Sunday',
 
         // Units
         celsius: 'Celsius',
@@ -60,21 +125,15 @@ export const translations = {
         ms: 'm/s',
         mmHg: 'mmHg',
         hPa: 'hPa',
+        meters: 'meters',
+        kilometers: 'kilometers',
+        miles: 'miles',
+        feet: 'feet',
+        inches: 'inches',
 
         // Languages
         english: 'English',
         russian: 'Russian',
-
-        // Pressure Status
-        lowPressure: 'Low',
-        normalPressure: 'Normal',
-        highPressure: 'High',
-
-        // Days
-        today: 'Today',
-        tomorrow: 'Tomorrow',
-        now: 'Now',  // Добавлено
-        backToList: 'Back to list',  // Добавлено
 
         // Weather Conditions
         clear: 'Clear',
@@ -86,6 +145,18 @@ export const translations = {
         mist: 'Mist',
         fog: 'Fog',
 
+        // Weather Descriptions
+        overcastClouds: 'Overcast',
+        brokenClouds: 'Broken clouds',
+        scatteredClouds: 'Scattered clouds',
+        fewClouds: 'Few clouds',
+        clearSky: 'Clear sky',
+        lightRain: 'Light rain',
+        moderateRain: 'Moderate rain',
+        heavyRain: 'Heavy rain',
+        lightSnow: 'Light snow',
+        thunderstormWithRain: 'Thunderstorm with rain',
+
         // Wind Directions
         N: 'North',
         NE: 'Northeast',
@@ -96,31 +167,132 @@ export const translations = {
         W: 'West',
         NW: 'Northwest',
 
-        // Дополнительные
+        // Pressure Status
+        lowPressure: 'Low',
+        normalPressure: 'Normal',
+        highPressure: 'High',
+
+        // Additional
         loading: 'Loading...',
+        loadingData: 'Loading data...',
         gettingLocation: 'Getting your location...',
         retry: 'Try Again',
         loadDefault: 'Load Default City',
-        pressure: 'Pressure',
-
-        // Прогноз и детали
-        precipitation: 'Precipitation',
-        cloudiness: 'Cloudiness',
-        windDirection: 'Wind Direction',
+        backToList: 'Back to list',
         selectDay: 'Select day',
         weekDays: 'Sun,Mon,Tue,Wed,Thu,Fri,Sat',
-        detailedForecast: 'Detailed Forecast',
         uvIndex: 'UV Index',
         moonrise: 'Moonrise',
         moonset: 'Moonset',
         refresh: 'Refresh',
-        addToFavorites: 'Add to favorites',
-        removeFromFavorites: 'Remove from favorites',
-        favorites: 'Favorites',
-        searching: 'Searching...',
-        selectDayForDetails: 'Select a day to view detailed forecast',
+        refreshData: 'Refresh data',
+        lastUpdated: 'Last updated',
 
-        // Удалены дубликаты
+        // Buttons and actions
+        yes: 'Yes',
+        no: 'No',
+        ok: 'OK',
+        close: 'Close',
+        moreDetails: 'More details',
+        lessDetails: 'Less details',
+
+        // Errors
+        networkError: 'Network error. Please check your connection.',
+        permissionDenied: 'Location permission denied',
+        locationUnavailable: 'Location unavailable',
+        geolocationError: 'Geolocation error',
+
+        // Weather Details
+        temperatureRange: 'Temperature Range',
+        weatherConditions: 'Weather Conditions',
+        atmosphericPressure: 'Atmospheric Pressure',
+        dewPoint: 'Dew Point',
+        humidityLevel: 'Humidity Level',
+        windGust: 'Wind Gust',
+        windDirection: 'Wind Direction',
+
+        // UV Index Categories
+        uvIndexCategory: {
+            low: 'Low',
+            moderate: 'Moderate',
+            high: 'High',
+            veryHigh: 'Very High',
+            extreme: 'Extreme'
+        },
+
+        // Air Quality
+        airQuality: 'Air Quality',
+        aqi: 'AQI',
+        good: 'Good',
+        moderate: 'Moderate',
+        unhealthySensitive: 'Unhealthy for Sensitive Groups',
+        unhealthy: 'Unhealthy',
+        veryUnhealthy: 'Very Unhealthy',
+        hazardous: 'Hazardous',
+
+        // Sun and Moon
+        sunriseSunset: 'Sunrise & Sunset',
+        dayLength: 'Day Length',
+        nightLength: 'Night Length',
+        moonPhase: 'Moon Phase',
+        newMoon: 'New Moon',
+        waxingCrescent: 'Waxing Crescent',
+        firstQuarter: 'First Quarter',
+        waxingGibbous: 'Waxing Gibbous',
+        fullMoon: 'Full Moon',
+        waningGibbous: 'Waning Gibbous',
+        lastQuarter: 'Last Quarter',
+        waningCrescent: 'Waning Crescent',
+
+        // Months (full)
+        january: 'January',
+        february: 'February',
+        march: 'March',
+        april: 'April',
+        june: 'June',
+        july: 'July',
+        august: 'August',
+        september: 'September',
+        october: 'October',
+        november: 'November',
+        december: 'December',
+
+        // Time of day
+        morning: 'Morning',
+        afternoon: 'Afternoon',
+        evening: 'Evening',
+        night: 'Night',
+        midnight: 'Midnight',
+        noon: 'Noon',
+
+        // Forecast details
+        chanceOfRain: 'Chance of rain',
+        chanceOfSnow: 'Chance of snow',
+        snowfall: 'Snowfall',
+        rainfall: 'Rainfall',
+        feelsLikeDetailed: 'Feels like temperature',
+        realFeel: 'Real Feel',
+        heatIndex: 'Heat Index',
+        windChill: 'Wind Chill',
+
+        // Footer and info
+        poweredBy: 'Powered by',
+        dataSource: 'Data Source',
+        about: 'About',
+        help: 'Help',
+        feedback: 'Feedback',
+        version: 'Version',
+        developedBy: 'Developed by',
+        allRightsReserved: 'All rights reserved',
+        privacyPolicy: 'Privacy Policy',
+        termsOfService: 'Terms of Service',
+        documentation: 'Documentation',
+        apiDocumentation: 'API Documentation',
+        support: 'Support',
+        community: 'Community',
+        contribute: 'Contribute',
+        reportIssue: 'Report Issue',
+        checkForUpdates: 'Check for Updates'
     },
 
     ru: {
@@ -131,23 +303,62 @@ export const translations = {
 
         // Current Weather
         feelsLike: 'Ощущается как',
+        feelsLikeShort: 'Ощущается',
         min: 'Мин',
         max: 'Макс',
         wind: 'Ветер',
         humidity: 'Влажность',
-        pressure: 'Давление',
         visibility: 'Видимость',
         sunrise: 'Восход',
         sunset: 'Закат',
         noWeatherData: 'Нет данных о погоде',
         gust: 'Порывы',
-
+        pressure: 'Давление',
+        cloudiness: 'Облачность',
+        precipitation: 'Осадки',
         myLocation: 'Мое местоположение',
 
+        // Days and time
+        now: 'Сейчас',
+        today: 'Сегодня',
+        tomorrow: 'Завтра',
+        monday: 'Понедельник',
+        tuesday: 'Вторник',
+        wednesday: 'Среда',
+        thursday: 'Четверг',
+        friday: 'Пятница',
+        saturday: 'Суббота',
+        sunday: 'Воскресенье',
+        // Abbreviated days
+        mon: 'Пн',
+        tue: 'Вт',
+        wed: 'Ср',
+        thu: 'Чт',
+        fri: 'Пт',
+        sat: 'Сб',
+        sun: 'Вс',
+
+        // Months (abbreviated)
+        jan: 'янв',
+        feb: 'фев',
+        mar: 'мар',
+        apr: 'апр',
+        jun: 'июн',
+        jul: 'июл',
+        aug: 'авг',
+        sep: 'сен',
+        oct: 'окт',
+        nov: 'ноя',
+        dec: 'дек',
+
         // Forecast
-        dailyForecast: 'Прогноз на 7 дней',  // Исправлено с 5 на 7
+        dailyForecast: 'Прогноз на 7 дней',
         hourlyForecast: 'Почасовой прогноз',
         noForecastData: 'Нет данных прогноза',
+        next24Hours: 'Следующие 24 часа',
+        weatherDetails: 'Детали погоды',
+        detailedForecast: 'Подробный прогноз',
+        selectDayForDetails: 'Выберите день для просмотра подробного прогноза',
 
         // City Management
         addCity: 'Добавить город',
@@ -155,11 +366,22 @@ export const translations = {
         searchCity: 'Поиск города...',
         confirmRemove: 'Вы уверены, что хотите удалить этот город?',
         favoriteCities: 'Избранные города',
+        favorites: 'Избранное',
         noCitiesAdded: 'Городов еще не добавлено',
         searchToAdd: 'Используйте поиск для добавления городов',
         useMyLocation: 'Использовать мое местоположение',
         locationError: 'Не удалось получить местоположение',
         viewDetails: 'Просмотр деталей',
+        addToFavorites: 'Добавить в избранное',
+        removeFromFavorites: 'Удалить из избранного',
+        addToDashboard: 'Добавить на панель',
+        cityAlreadyAdded: 'Город уже в вашем списке',
+        maxCitiesReached: 'Достигнуто максимальное количество городов',
+
+        // Search
+        searchResults: 'Результаты поиска',
+        searching: 'Поиск...',
+        cityNotFound: 'Город не найден',
 
         // Settings
         temperature: 'Температура',
@@ -176,6 +398,18 @@ export const translations = {
         clearCache: 'Очистить кэш',
         exportSettings: 'Экспорт настроек',
         confirmClearCache: 'Вы уверены, что хотите очистить все кэшированные данные?',
+        saveChanges: 'Сохранить изменения',
+        cancel: 'Отмена',
+        confirm: 'Подтвердить',
+        timeFormat: 'Формат времени',
+        dateFormat: 'Формат даты',
+        twelveHour: '12-часовой формат',
+        twentyFourHour: '24-часовой формат',
+        showSeconds: 'Показывать секунды',
+        showWeekNumbers: 'Показывать номера недель',
+        startWeekOn: 'Неделя начинается с',
+        mondayStart: 'Понедельника',
+        sundayStart: 'Воскресенья',
 
         // Units
         celsius: 'Цельсий',
@@ -185,31 +419,37 @@ export const translations = {
         ms: 'м/с',
         mmHg: 'мм рт. ст.',
         hPa: 'гПа',
+        meters: 'метры',
+        kilometers: 'километры',
+        miles: 'мили',
+        feet: 'футы',
+        inches: 'дюймы',
 
         // Languages
         english: 'Английский',
         russian: 'Русский',
 
-        // Pressure Status
-        lowPressure: 'Низкое',
-        normalPressure: 'Нормальное',
-        highPressure: 'Высокое',
-
-        // Days
-        today: 'Сегодня',
-        tomorrow: 'Завтра',
-        now: 'Сейчас',  // Добавлено
-        backToList: 'Назад к списку',  // Добавлено
-
         // Weather Conditions
         clear: 'Ясно',
         clouds: 'Облачно',
         rain: 'Дождь',
-        snow: 'Снег',
         thunderstorm: 'Гроза',
         drizzle: 'Морось',
         mist: 'Туман',
         fog: 'Туман',
+
+        // Weather Descriptions
+        overcastClouds: 'Пасмурно',
+        brokenClouds: 'Рассеянная облачность',
+        scatteredClouds: 'Переменная облачность',
+        fewClouds: 'Небольшая облачность',
+        clearSky: 'Ясное небо',
+        lightRain: 'Небольшой дождь',
+        moderateRain: 'Умеренный дождь',
+        heavyRain: 'Сильный дождь',
+        lightSnow: 'Небольшой снег',
+        snow: 'Снег',
+        thunderstormWithRain: 'Гроза с дождем',
 
         // Wind Directions
         N: 'Северный',
@@ -221,27 +461,132 @@ export const translations = {
         W: 'Западный',
         NW: 'Северо-западный',
 
-        // Дополнительные
+        // Pressure Status
+        lowPressure: 'Низкое',
+        normalPressure: 'Нормальное',
+        highPressure: 'Высокое',
+
+        // Additional
         loading: 'Загрузка...',
+        loadingData: 'Загрузка данных...',
         gettingLocation: 'Определяем ваше местоположение...',
         retry: 'Попробовать снова',
         loadDefault: 'Загрузить Москву',
-
-        // Прогноз и детали
-        precipitation: 'Осадки',
-        cloudiness: 'Облачность',
-        windDirection: 'Направление ветра',
+        backToList: 'Назад к списку',
         selectDay: 'Выберите день',
         weekDays: 'Вс,Пн,Вт,Ср,Чт,Пт,Сб',
-        detailedForecast: 'Подробный прогноз',
         uvIndex: 'УФ индекс',
         moonrise: 'Восход луны',
         moonset: 'Заход луны',
         refresh: 'Обновить',
-        addToFavorites: 'Добавить в избранное',
-        removeFromFavorites: 'Удалить из избранного',
-        favorites: 'Избранное',
-        searching: 'Поиск...',
-        selectDayForDetails: 'Выберите день для просмотра подробного прогноза',
+        refreshData: 'Обновить данные',
+        lastUpdated: 'Обновлено',
+
+        // Buttons and actions
+        yes: 'Да',
+        no: 'Нет',
+        ok: 'OK',
+        close: 'Закрыть',
+        moreDetails: 'Подробнее',
+        lessDetails: 'Свернуть',
+
+        // Errors
+        networkError: 'Ошибка сети. Проверьте подключение.',
+        permissionDenied: 'Доступ к местоположению запрещен',
+        locationUnavailable: 'Местоположение недоступно',
+        geolocationError: 'Ошибка геолокации',
+
+        // Weather Details
+        temperatureRange: 'Диапазон температур',
+        weatherConditions: 'Погодные условия',
+        atmosphericPressure: 'Атмосферное давление',
+        dewPoint: 'Точка росы',
+        humidityLevel: 'Уровень влажности',
+        windGust: 'Порывы ветра',
+        windDirection: 'Направление ветра',
+
+        // UV Index Categories
+        uvIndexCategory: {
+            low: 'Низкий',
+            moderate: 'Умеренный',
+            high: 'Высокий',
+            veryHigh: 'Очень высокий',
+            extreme: 'Экстремальный'
+        },
+
+        // Air Quality
+        airQuality: 'Качество воздуха',
+        aqi: 'AQI',
+        good: 'Хорошее',
+        moderate: 'Умеренное',
+        unhealthySensitive: 'Вредное для чувствительных групп',
+        unhealthy: 'Вредное',
+        veryUnhealthy: 'Очень вредное',
+        hazardous: 'Опасное',
+
+        // Sun and Moon
+        sunriseSunset: 'Восход и закат',
+        dayLength: 'Продолжительность дня',
+        nightLength: 'Продолжительность ночи',
+        moonPhase: 'Фаза луны',
+        newMoon: 'Новолуние',
+        waxingCrescent: 'Растущий серп',
+        firstQuarter: 'Первая четверть',
+        waxingGibbous: 'Растущая луна',
+        fullMoon: 'Полнолуние',
+        waningGibbous: 'Убывающая луна',
+        lastQuarter: 'Последняя четверть',
+        waningCrescent: 'Убывающий серп',
+
+        // Months (full)
+        january: 'Январь',
+        february: 'Февраль',
+        march: 'Март',
+        april: 'Апрель',
+        may: 'Май',
+        june: 'Июнь',
+        july: 'Июль',
+        august: 'Август',
+        september: 'Сентябрь',
+        october: 'Октябрь',
+        november: 'Ноябрь',
+        december: 'Декабрь',
+
+        // Time of day
+        morning: 'Утро',
+        afternoon: 'День',
+        evening: 'Вечер',
+        night: 'Ночь',
+        midnight: 'Полночь',
+        noon: 'Полдень',
+
+        // Forecast details
+        chanceOfRain: 'Вероятность дождя',
+        chanceOfSnow: 'Вероятность снега',
+        snowfall: 'Снегопад',
+        rainfall: 'Осадки',
+        feelsLikeDetailed: 'Ощущаемая температура',
+        realFeel: 'Реальное ощущение',
+        heatIndex: 'Тепловой индекс',
+        windChill: 'Охлаждение ветром',
+
+        // Footer and info
+        poweredBy: 'На базе',
+        dataSource: 'Источник данных',
+        about: 'О приложении',
+        help: 'Помощь',
+        feedback: 'Обратная связь',
+        version: 'Версия',
+        developedBy: 'Разработано',
+        allRightsReserved: 'Все права защищены',
+        privacyPolicy: 'Политика конфиденциальности',
+        termsOfService: 'Условия использования',
+        documentation: 'Документация',
+        apiDocumentation: 'Документация API',
+        support: 'Поддержка',
+        community: 'Сообщество',
+        contribute: 'Внести вклад',
+        reportIssue: 'Сообщить об ошибке',
+        checkForUpdates: 'Проверить обновления'
     }
 }

@@ -1,30 +1,55 @@
-import { ref } from 'vue'
+// src/composables/useTranslation.ts
+import { computed } from 'vue'
+import { useSettingsStore } from '@/store/settings'
 import { translations } from '@/locales/index'
 
-export const currentLocale = ref('en')
-
-// Экспортируйте функцию useTranslation
 export const useTranslation = () => {
+    const settingsStore = useSettingsStore()
+
     const t = (key: string): string => {
-        const langTranslations = translations[currentLocale.value as keyof typeof translations]
-        const typedTranslations = langTranslations as Record<string, string>
-        return typedTranslations[key] || (translations.en as Record<string, string>)[key] || key
+        const lang = settingsStore.language || 'en'
+        const langTranslations = translations[lang as keyof typeof translations]
+
+        // Для простых строк
+        if (typeof langTranslations === 'object' && key in langTranslations) {
+            const value = langTranslations[key as keyof typeof langTranslations]
+            if (typeof value === 'string') {
+                return value
+            }
+        }
+
+        // Для вложенных объектов (например, uvIndexCategory.low)
+        const keys = key.split('.')
+        let current: any = langTranslations
+
+        for (const k of keys) {
+            if (current && typeof current === 'object' && k in current) {
+                current = current[k]
+            } else {
+                // Fallback to English
+                const enTranslations = translations.en
+                let enCurrent: any = enTranslations
+                let found = true
+
+                for (const enKey of keys) {
+                    if (enCurrent && typeof enCurrent === 'object' && enKey in enCurrent) {
+                        enCurrent = enCurrent[enKey]
+                    } else {
+                        found = false
+                        break
+                    }
+                }
+
+                if (found && typeof enCurrent === 'string') {
+                    return enCurrent
+                }
+
+                return key
+            }
+        }
+
+        return typeof current === 'string' ? current : key
     }
 
-    const setLocale = (locale: 'en' | 'ru') => {
-        currentLocale.value = locale
-    }
-
-    return { t, currentLocale, setLocale }
-}
-
-// Или оставьте как было, но экспортируйте t отдельно
-export const t = (key: string): string => {
-    const langTranslations = translations[currentLocale.value as keyof typeof translations]
-    const typedTranslations = langTranslations as Record<string, string>
-    return typedTranslations[key] || (translations.en as Record<string, string>)[key] || key
-}
-
-export const setLocale = (locale: 'en' | 'ru') => {
-    currentLocale.value = locale
+    return { t }
 }

@@ -1,75 +1,73 @@
+// store/cities.ts
 import { defineStore } from 'pinia'
-import { ref } from 'vue' // Убедитесь, что импортирован ref
+import { ref, computed } from 'vue'
 import type { City } from '@/types/weather'
-import type { Ref } from 'vue' // Добавьте импорт Ref
 
 export const useCitiesStore = defineStore('cities', () => {
-    const cities: Ref<City[]> = ref([])
-    const favoriteCities: Ref<City[]> = ref([])
+    const favorites = ref<City[]>([])
 
-    // Загрузка из localStorage
+    // Загружаем из localStorage при инициализации
     const loadFromStorage = () => {
-        const storedCities = localStorage.getItem('weather-dashboard-cities')
-        const storedFavorites = localStorage.getItem('weather-dashboard-favoriteCities')
-
-        if (storedCities) {
-            cities.value = JSON.parse(storedCities)
-        }
-        if (storedFavorites) {
-            favoriteCities.value = JSON.parse(storedFavorites)
+        const saved = localStorage.getItem('weather-favorites')
+        if (saved) {
+            favorites.value = JSON.parse(saved)
         }
     }
 
-    // Сохранение в localStorage
+    // Сохраняем в localStorage
     const saveToStorage = () => {
-        localStorage.setItem('weather-dashboard-cities', JSON.stringify(cities.value))
-        localStorage.setItem('weather-dashboard-favoriteCities', JSON.stringify(favoriteCities.value))
+        localStorage.setItem('weather-favorites', JSON.stringify(favorites.value))
     }
 
-    // Добавление города
-    const addCity = (city: City) => {
-        if (!cities.value.some(c => c.id === city.id)) {
-            cities.value.push(city)
-            saveToStorage()
-        }
+    // Проверяем, есть ли город в избранном
+    const isFavorite = (cityId: number): boolean => {
+        return favorites.value.some(city => city.id === cityId)
     }
 
-    // Удаление города
-    const removeCity = (cityId: number) => {
-        cities.value = cities.value.filter(c => c.id !== cityId)
-        favoriteCities.value = favoriteCities.value.filter(c => c.id !== cityId)
-        saveToStorage()
-    }
-
-    // Добавление в избранное
+    // Добавляем город в избранное
     const addToFavorites = (city: City) => {
-        if (!favoriteCities.value.some(c => c.id === city.id)) {
-            favoriteCities.value.push(city)
+        // Проверяем, нет ли уже такого города
+        if (!isFavorite(city.id)) {
+            favorites.value.push(city)
+            saveToStorage()
+        } else {
+            console.warn('Город уже в избранном:', city.name)
+        }
+    }
+
+    // Удаляем город из избранного
+    const removeFromFavorites = (cityId: number) => {
+        const index = favorites.value.findIndex(city => city.id === cityId)
+        if (index !== -1) {
+            favorites.value.splice(index, 1)
             saveToStorage()
         }
     }
 
-    // Удаление из избранного
-    const removeFromFavorites = (cityId: number) => {
-        favoriteCities.value = favoriteCities.value.filter(c => c.id !== cityId)
+    // Переключаем статус избранного
+    const toggleFavorite = (city: City) => {
+        if (isFavorite(city.id)) {
+            removeFromFavorites(city.id)
+        } else {
+            addToFavorites(city)
+        }
+    }
+
+    // Очищаем все избранное
+    const clearFavorites = () => {
+        favorites.value = []
         saveToStorage()
     }
 
-    // Проверка, является ли город избранным
-    const isFavorite = (cityId: number) => {
-        return favoriteCities.value.some(c => c.id === cityId)
-    }
-
-    // Инициализация
+    // Загружаем при создании store
     loadFromStorage()
 
     return {
-        cities,
-        favoriteCities,
-        addCity,
-        removeCity,
+        favoriteCities: computed(() => favorites.value),
+        isFavorite,
         addToFavorites,
         removeFromFavorites,
-        isFavorite
+        toggleFavorite,
+        clearFavorites
     }
 })
