@@ -158,16 +158,6 @@
                 </div>
 
                 <!-- Кнопка избранного -->
-                <div class="favorite-section">
-                  <button class="btn favorite-btn w-100"
-                          :class="isCurrentFavorite ? 'btn-danger' : 'btn-outline-danger'"
-                          @click="toggleFavorite">
-                    <i :class="isCurrentFavorite ? 'bi bi-heart-fill' : 'bi bi-heart'"></i>
-                    <span class="ms-2">
-                      {{ isCurrentFavorite ? t('removeFromFavorites') : t('addToFavorites') }}
-                    </span>
-                  </button>
-                </div>
               </div>
             </div>
 
