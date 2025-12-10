@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import type { Ref } from 'vue'
+import { fetchWeatherByName, fetchForecastByName } from '@/utils/api'
 import {
     fetchWeatherData,
     fetchForecastData,

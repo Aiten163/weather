@@ -57,7 +57,7 @@ const searchQuery = ref('')
 const suggestions = ref<City[]>([])
 const showSuggestions = ref(false)
 const isSearching = ref(false)
-let searchTimeout: NodeJS.Timeout | null = null
+let searchTimeout: number | null = null
 
 const weatherStore = useWeatherStore()
 const citiesStore = useCitiesStore()

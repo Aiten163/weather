@@ -25,10 +25,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useSettingsStore } from '@/store/settings'
-import { useTranslation } from '@/composables/useTranslation'
 
 const settingsStore = useSettingsStore()
-const { t } = useTranslation()
 
 const currentLanguageText = computed(() => {
   return settingsStore.language === 'en' ? 'English' : 'Русский'

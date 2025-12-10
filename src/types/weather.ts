@@ -86,18 +86,21 @@ export interface City {
 
 export interface DailyForecast {
     date: Date
-    temp_day: number
+    temp_day?: number  // Сделать необязательным
+    temp?: number      // Сделать необязательным
     temp_min: number
     temp_max: number
     condition: string
     description: string
-    icon: string
+    icon?: string
     humidity: number
     wind_speed: number
     precipitation: number
     cloudiness: number
     pressure: number
-    hourly_data?: HourlyForecast[]
+    hourly_data: HourlyForecast[]
+    feels_like?: number,
+    pop?: number
 }
 
 export interface HourlyForecast {

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
-import type { Ref } from 'vue'
+import { ref } from 'vue' // Убедитесь, что импортирован ref
 import type { City } from '@/types/weather'
+import type { Ref } from 'vue' // Добавьте импорт Ref
 
 export const useCitiesStore = defineStore('cities', () => {
     const cities: Ref<City[]> = ref([])

@@ -1,7 +1,21 @@
+// Безопасное получение переменных окружения
+const getEnvVar = (key: string, defaultValue: string = ''): string => {
+    try {
+        // Проверяем, доступен ли import.meta.env
+        if (typeof import.meta !== 'undefined' && import.meta.env) {
+            const value = import.meta.env[key];
+            return value !== undefined ? String(value) : defaultValue;
+        }
+    } catch (error) {
+        console.warn(`Failed to get env var ${key}:`, error);
+    }
+    return defaultValue;
+};
+
 // Используем наш прокси
-const USE_PROXY = import.meta.env.VITE_USE_PROXY === 'true';
-const PROXY_URL = import.meta.env.VITE_PROXY_URL || 'http://elmir.mordovia.ru/';
-const DIRECT_API_KEY = import.meta.env.VITE_WEATHER_API_KEY || '';
+const USE_PROXY = getEnvVar('VITE_USE_PROXY') === 'true';
+const PROXY_URL = getEnvVar('VITE_PROXY_URL') || 'http://elmir.mordovia.ru/';
+const DIRECT_API_KEY = getEnvVar('VITE_WEATHER_API_KEY') || '';
 
 export const API_CONFIG = {
     USE_PROXY,

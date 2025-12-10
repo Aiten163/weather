@@ -109,48 +109,10 @@ export const fetchForecastByCoords = async (lat: number, lon: number): Promise<F
     const response = await api.get(url)
     return response.data
 }
-const selectCity = async (city: City) => {
-    console.log('Selecting city (debug):', JSON.parse(JSON.stringify(city)))
 
-    // Если у города нет ID, используем геокодирование по координатам
-    if (!city.id || city.id === 0) {
-        console.log('City has no ID, trying to get weather by coordinates')
+// Удаленная функция selectCity (она должна быть в компоненте, а не в API)
+// Она использует переменные, которые не определены здесь
 
-        if (city.coord?.lat && city.coord?.lon) {
-            try {
-                // Пробуем получить погоду по координатам
-                await weatherStore.loadWeatherByCoords(city.coord.lat, city.coord.lon)
-
-                // Получаем ID из загруженных данных
-                if (weatherStore.currentWeather?.id) {
-                    city.id = weatherStore.currentWeather.id
-                    console.log('Got ID from weather data:', city.id)
-                }
-            } catch (error) {
-                console.error('Failed to get weather by coordinates:', error)
-                // Используем fallback ID
-                city.id = Date.now()
-            }
-        } else {
-            // Если нет координат, используем временный ID
-            city.id = Date.now()
-        }
-    }
-
-    // Если все еще нет ID, создаем временный
-    if (!city.id) {
-        city.id = Date.now()
-    }
-
-    citiesStore.addCity(city)
-
-    // Загружаем погоду
-    await weatherStore.loadWeatherData(city.id)
-
-    searchQuery.value = ''
-    suggestions.value = []
-    showSuggestions.value = false
-}
 export const searchCities = async (query: string): Promise<City[]> => {
     if (!query || query.trim().length < 2) {
         return []
@@ -191,6 +153,7 @@ export const searchCities = async (query: string): Promise<City[]> => {
         }
     })
 }
+
 // Загрузка погоды по названию города (не по ID)
 export const fetchWeatherByName = async (cityName: string, countryCode?: string): Promise<WeatherData> => {
     const query = countryCode ? `${cityName},${countryCode}` : cityName

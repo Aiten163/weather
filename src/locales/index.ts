@@ -1,7 +1,7 @@
+// src/locales/index.ts
 export const translations = {
     en: {
         // Header
-        title: 'Weather Dashboard',
         dashboard: 'Dashboard',
         settings: 'Settings',
 
@@ -11,7 +11,6 @@ export const translations = {
         max: 'Max',
         wind: 'Wind',
         humidity: 'Humidity',
-        pressure: 'Pressure',
         visibility: 'Visibility',
         sunrise: 'Sunrise',
         sunset: 'Sunset',
@@ -21,7 +20,7 @@ export const translations = {
         myLocation: 'My Location',
 
         // Forecast
-        dailyForecast: '5-Day Forecast',
+        dailyForecast: '7-Day Forecast',  // Исправлено с 5 на 7
         hourlyForecast: 'Hourly Forecast',
         noForecastData: 'No forecast data available',
 
@@ -74,6 +73,8 @@ export const translations = {
         // Days
         today: 'Today',
         tomorrow: 'Tomorrow',
+        now: 'Now',  // Добавлено
+        backToList: 'Back to list',  // Добавлено
 
         // Weather Conditions
         clear: 'Clear',
@@ -95,119 +96,34 @@ export const translations = {
         W: 'West',
         NW: 'Northwest',
 
+        // Дополнительные
         loading: 'Loading...',
         gettingLocation: 'Getting your location...',
         retry: 'Try Again',
         loadDefault: 'Load Default City',
         pressure: 'Pressure',
-        pressureUnit: 'Pressure Unit',
-        mmHg: 'mmHg',
-        hPa: 'hPa',
-        lowPressure: 'Low',
-        normalPressure: 'Normal',
-        highPressure: 'High',
 
-        // Ветер и его единицы
-        wind: 'Wind',
-        windSpeed: 'Wind Speed',
-        windDirection: 'Wind Direction',
-        gust: 'Gust',
-        kmh: 'km/h',
-        mph: 'mph',
-        ms: 'm/s',
-
-        // Прогноз
-        dailyForecast: '7-Day Forecast',
-        hourlyForecast: 'Hourly Forecast',
-        selectDay: 'Select day',
-        today: 'Today',
-        tomorrow: 'Tomorrow',
-        weekDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-
-        // Подробный прогноз
-        detailedForecast: 'Detailed Forecast',
+        // Прогноз и детали
         precipitation: 'Precipitation',
         cloudiness: 'Cloudiness',
-        feelsLike: 'Feels like',
+        windDirection: 'Wind Direction',
+        selectDay: 'Select day',
+        weekDays: 'Sun,Mon,Tue,Wed,Thu,Fri,Sat',
+        detailedForecast: 'Detailed Forecast',
         uvIndex: 'UV Index',
-        sunrise: 'Sunrise',
-        sunset: 'Sunset',
         moonrise: 'Moonrise',
         moonset: 'Moonset',
-
-        // Кнопки и действия
-        viewDetails: 'View Details',
-        closeDetails: 'Close',
         refresh: 'Refresh',
-        loading: 'Loading...',
         addToFavorites: 'Add to favorites',
         removeFromFavorites: 'Remove from favorites',
         favorites: 'Favorites',
         searching: 'Searching...',
-        en: 'Back to list',
-        // Ошибки
-        noForecastData: 'No forecast data available',
         selectDayForDetails: 'Select a day to view detailed forecast',
+
+        // Удалены дубликаты
     },
 
     ru: {
-        addToFavorites: 'Добавить в избранное',
-        ru: 'Назад к списку',
-        removeFromFavorites: 'Удалить из избранного',
-        favorites: 'Избранное',
-        searching: 'Поиск...',
-        // Давление и его статус
-        pressure: 'Давление',
-        pressureUnit: 'Единица давления',
-        mmHg: 'мм рт. ст.',
-        hPa: 'гПа',
-        lowPressure: 'Низкое',
-        normalPressure: 'Нормальное',
-        highPressure: 'Высокое',
-        now: 'Сейчас',
-
-        // Ветер и его единицы
-        wind: 'Ветер',
-        windSpeed: 'Скорость ветра',
-        windDirection: 'Направление ветра',
-        gust: 'Порывы',
-        kmh: 'км/ч',
-        mph: 'миль/ч',
-        ms: 'м/с',
-
-        // Прогноз
-        dailyForecast: 'Прогноз на 7 дней',
-        hourlyForecast: 'Почасовой прогноз',
-        selectDay: 'Выберите день',
-        today: 'Сегодня',
-        tomorrow: 'Завтра',
-        weekDays: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-
-        // Подробный прогноз
-        detailedForecast: 'Подробный прогноз',
-        precipitation: 'Осадки',
-        cloudiness: 'Облачность',
-        feelsLike: 'Ощущается как',
-        uvIndex: 'УФ индекс',
-        sunrise: 'Восход',
-        sunset: 'Закат',
-        moonrise: 'Восход луны',
-        moonset: 'Заход луны',
-
-        // Кнопки и действия
-        viewDetails: 'Подробнее',
-        closeDetails: 'Закрыть',
-        refresh: 'Обновить',
-        loading: 'Загрузка...',
-
-        // Ошибки
-        noForecastData: 'Нет данных прогноза',
-        selectDayForDetails: 'Выберите день для просмотра подробного прогноза',
-        retry: 'Попробовать снова',
-        loadDefault: 'Загрузить Москву',
-        loading: 'Загрузка...',
-        gettingLocation: 'Определяем ваше местоположение...',
-
         // Header
         title: 'Погодный Дашборд',
         dashboard: 'Панель управления',
@@ -227,8 +143,9 @@ export const translations = {
         gust: 'Порывы',
 
         myLocation: 'Мое местоположение',
+
         // Forecast
-        dailyForecast: 'Прогноз на 5 дней',
+        dailyForecast: 'Прогноз на 7 дней',  // Исправлено с 5 на 7
         hourlyForecast: 'Почасовой прогноз',
         noForecastData: 'Нет данных прогноза',
 
@@ -281,6 +198,8 @@ export const translations = {
         // Days
         today: 'Сегодня',
         tomorrow: 'Завтра',
+        now: 'Сейчас',  // Добавлено
+        backToList: 'Назад к списку',  // Добавлено
 
         // Weather Conditions
         clear: 'Ясно',
@@ -300,6 +219,29 @@ export const translations = {
         S: 'Южный',
         SW: 'Юго-западный',
         W: 'Западный',
-        NW: 'Северо-западный'
+        NW: 'Северо-западный',
+
+        // Дополнительные
+        loading: 'Загрузка...',
+        gettingLocation: 'Определяем ваше местоположение...',
+        retry: 'Попробовать снова',
+        loadDefault: 'Загрузить Москву',
+
+        // Прогноз и детали
+        precipitation: 'Осадки',
+        cloudiness: 'Облачность',
+        windDirection: 'Направление ветра',
+        selectDay: 'Выберите день',
+        weekDays: 'Вс,Пн,Вт,Ср,Чт,Пт,Сб',
+        detailedForecast: 'Подробный прогноз',
+        uvIndex: 'УФ индекс',
+        moonrise: 'Восход луны',
+        moonset: 'Заход луны',
+        refresh: 'Обновить',
+        addToFavorites: 'Добавить в избранное',
+        removeFromFavorites: 'Удалить из избранного',
+        favorites: 'Избранное',
+        searching: 'Поиск...',
+        selectDayForDetails: 'Выберите день для просмотра подробного прогноза',
     }
 }

@@ -123,7 +123,7 @@
                 <div class="temperature-section mb-4">
                   <div class="main-temperature">
                     <h2 class="display-4 fw-bold">
-                      {{ formatTemperature(displayWeather.temp) }}
+                      {{ formatTemperature(displayWeather.temp || 0) }}
                     </h2>
                     <div class="temperature-range mt-2">
                       <span class="temp-min">
@@ -148,7 +148,7 @@
                       </div>
                       <div class="feels-like mt-1">
                         <i class="bi bi-thermometer-half me-1"></i>
-                        {{ t('feelsLike') }} {{ formatTemperature(displayWeather.feels_like) }}
+                        {{ t('feelsLike') }} {{ formatTemperature(displayWeather.feels_like || 0) }}
                       </div>
                       <div class="condition-description small text-muted mt-1">
                         {{ displayWeather.description }}
@@ -346,7 +346,7 @@ const selectedDayIndex = ref<number>(-1)
 const selectedDayData = ref<DailyForecast | null>(null)
 
 // Получаем 10-дневный прогноз (7+3 дополнительных)
-const dailyForecast = computed<DailyForecast[] | null>(() => {
+const dailyForecast = computed(() => {
   if (!weatherStore.forecast?.list) return null
 
   const dailyData: Record<string, any[]> = {}
@@ -354,10 +354,9 @@ const dailyForecast = computed<DailyForecast[] | null>(() => {
   // Сортируем данные по времени
   const sortedList = [...weatherStore.forecast.list].sort((a, b) => a.dt - b.dt)
 
-  // Собираем все доступные дни из прогноза (OpenWeather дает 5 дней по 3 часа = 40 записей)
+  // Собираем все доступные дни из прогноза
   sortedList.forEach(item => {
     const date = new Date(item.dt * 1000)
-    // Создаем ключ только по дню (без времени)
     const dateKey = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 
     if (!dailyData[dateKey]) {
@@ -399,8 +398,7 @@ const dailyForecast = computed<DailyForecast[] | null>(() => {
 
     // Максимальная вероятность осадков
     const maxPrecipitation = Math.max(...dayData.map(d => {
-      // Проверяем разные возможные поля с вероятностью осадков
-      const pop = d.pop || d.rain?.['3h'] || d.snow?.['3h'] || 0
+      const pop = (d as any).pop || (d.rain?.['3h'] || d.snow?.['3h'] || 0)
       return Math.min(pop * 100, 100)
     }))
 
@@ -423,26 +421,38 @@ const dailyForecast = computed<DailyForecast[] | null>(() => {
     const [year, month, day] = dateKey.split('-').map(Number)
     const date = new Date(year, month - 1, day)
 
-    return {
+    // Создаем hourly_data с правильными типами
+    const hourly_data = dayData.map(item => ({
+      time: new Date(item.dt * 1000),
+      temp: item.main.temp,
+      condition: item.weather[0].main,
+      icon: item.weather[0].icon,
+      humidity: item.main.humidity,
+      wind_speed: item.wind?.speed || 0,
+      precipitation: ((item as any).pop || 0) * 100
+    }))
+
+    // Возвращаем объект с правильным типом DailyForecast
+    const forecast: DailyForecast = {
       date: date,
       temp: avgDayTemp,
+      temp_day: avgDayTemp,
       temp_min: Math.min(...temps),
       temp_max: Math.max(...temps),
       condition: dayItem.weather[0].main,
       description: dayItem.weather[0].description,
+      icon: dayItem.weather[0].icon,
       humidity: avgHumidity,
       wind_speed: avgWindSpeed,
       precipitation: maxPrecipitation,
       cloudiness: avgCloudiness,
       pressure: avgPressure,
-      hourly_data: dayData.map(item => ({
-        time: new Date(item.dt * 1000),
-        temp: item.main.temp,
-        condition: item.weather[0].main,
-        precipitation: (item.pop || 0) * 100
-      })),
-      feels_like: dayItem.main.feels_like
+      hourly_data: hourly_data,
+      feels_like: dayItem.main.feels_like,
+      pop: maxPrecipitation / 100
     }
+
+    return forecast
   })
 })
 
@@ -480,7 +490,7 @@ const displayWeather = computed(() => {
       description: weatherStore.currentWeather.weather[0].description,
       humidity: weatherStore.currentWeather.main.humidity,
       wind_speed: weatherStore.currentWeather.wind.speed,
-      precipitation: (weatherStore.currentWeather.pop || 0) * 100,
+      precipitation: (weatherStore.currentWeather as any)?.pop ? (weatherStore.currentWeather as any).pop * 100 : 0,
       cloudiness: weatherStore.currentWeather.clouds.all,
       pressure: weatherStore.currentWeather.main.pressure,
       visibility: weatherStore.currentWeather.visibility,
@@ -518,7 +528,7 @@ const hourlyData = computed(() => {
   if (weatherStore.forecast?.list && selectedDayIndex.value === -1) {
     return weatherStore.forecast.list
         .slice(0, 8)
-        .map(item => ({
+        .map((item: any) => ({
           time: new Date(item.dt * 1000),
           temp: item.main.temp,
           condition: item.weather[0].main,
@@ -577,7 +587,7 @@ const getCurrentHumidity = () => {
 }
 
 const getWeatherCondition = (condition: string) => {
-  const conditions = {
+  const conditions: Record<string, Record<string, string>> = {
     en: {
       'clear': 'Clear',
       'clouds': 'Cloudy',
@@ -601,7 +611,8 @@ const getWeatherCondition = (condition: string) => {
   }
 
   const key = condition.toLowerCase()
-  return conditions[settingsStore.language][key] || condition
+  const lang = settingsStore.language as keyof typeof conditions
+  return conditions[lang]?.[key] || condition
 }
 
 const getDayTitle = (date: Date): string => {
@@ -688,20 +699,6 @@ const formatHour = (date: Date): string => {
 // Функции выбора дня
 const selectCurrentDay = () => {
   selectedDayIndex.value = -1
-}
-const loadExtendedForecast = async () => {
-  if (!weatherStore.selectedCity) return
-
-  try {
-    // Здесь можно добавить вызов другого API для расширенного прогноза
-    // Например, использовать другой эндпоинт OpenWeather для 16-дневного прогноза
-    console.log('Загрузка расширенного прогноза...')
-
-    // Если используете API с ограничением в 5 дней,
-    // возможно нужно перейти на платный тариф или другой сервис
-  } catch (error) {
-    console.error('Ошибка загрузки расширенного прогноза:', error)
-  }
 }
 
 const selectForecastDay = (index: number) => {

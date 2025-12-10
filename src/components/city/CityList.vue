@@ -41,17 +41,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useWeatherStore } from '@/store/weather'
 import { useCitiesStore } from '@/store/cities'
 import { useTranslation } from '@/composables/useTranslation'
-import { useGeolocation } from '@/composables/useGeolocation'
 import type { City } from '@/types/weather'
 
 const weatherStore = useWeatherStore()
 const citiesStore = useCitiesStore()
 const { t } = useTranslation()
-const { getCurrentLocation, isLoading: isLoadingLocation } = useGeolocation()
 
 const isCurrentCity = (cityId: number) => {
   return weatherStore.selectedCity?.id === cityId
@@ -88,17 +85,6 @@ const refreshAll = async () => {
   }
 }
 
-const useCurrentLocation = async () => {
-  try {
-    const location = await getCurrentLocation()
-    if (location) {
-      await weatherStore.loadWeatherByCoords(location.latitude, location.longitude)
-    }
-  } catch (error) {
-    console.error('Geolocation error:', error)
-    alert(t('locationError'))
-  }
-}
 </script>
 
 <style scoped>

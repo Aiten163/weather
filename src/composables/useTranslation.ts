@@ -1,19 +1,30 @@
-import { computed } from 'vue'
-import { useSettingsStore } from '@/store/settings'
-import { translations } from '@/locales'
+import { ref } from 'vue'
+import { translations } from '@/locales/index'
 
+export const currentLocale = ref('en')
+
+// Экспортируйте функцию useTranslation
 export const useTranslation = () => {
-    const settingsStore = useSettingsStore()
-
     const t = (key: string): string => {
-        const lang = settingsStore.language
-        const langTranslations = translations[lang]
-
-        // Возвращаем перевод или оригинальный ключ, если перевод не найден
-        return langTranslations[key] || translations.en[key] || key
+        const langTranslations = translations[currentLocale.value as keyof typeof translations]
+        const typedTranslations = langTranslations as Record<string, string>
+        return typedTranslations[key] || (translations.en as Record<string, string>)[key] || key
     }
 
-    const currentLanguage = computed(() => settingsStore.language)
+    const setLocale = (locale: 'en' | 'ru') => {
+        currentLocale.value = locale
+    }
 
-    return { t, currentLanguage }
+    return { t, currentLocale, setLocale }
+}
+
+// Или оставьте как было, но экспортируйте t отдельно
+export const t = (key: string): string => {
+    const langTranslations = translations[currentLocale.value as keyof typeof translations]
+    const typedTranslations = langTranslations as Record<string, string>
+    return typedTranslations[key] || (translations.en as Record<string, string>)[key] || key
+}
+
+export const setLocale = (locale: 'en' | 'ru') => {
+    currentLocale.value = locale
 }

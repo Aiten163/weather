@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useWeatherStore } from '@/store/weather'
-import { useCitiesStore } from '@/store/settings'
+import { useCitiesStore } from '@/store/cities'
 import { useSettingsStore } from '@/store/settings'
 import { formatTemperature, formatWindSpeed, getWeatherCondition } from '@/utils/weather-formatters'
 import { useTranslation } from '@/composables/useTranslation'
@@ -88,9 +88,10 @@ onMounted(async () => {
 
 const loadWeather = async () => {
   try {
-    weather.value = await weatherStore.fetchWeatherData(props.city.id)
+    // Удалите присваивание переменной, если она не используется
+    await weatherStore.loadWeatherData(props.city.id)
   } catch (error) {
-    console.error('Failed to load weather for city:', props.city.name, error)
+    console.error('Error loading weather:', error)
   }
 }
 
