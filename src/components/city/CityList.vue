@@ -64,9 +64,6 @@ const safeFavoriteCities = computed(() => {
   return cities
 })
 
-const hasFavorites = computed(() => {
-  return safeFavoriteCities.value.length > 0
-})
 
 const isCurrentCity = (cityId: number) => {
   return weatherStore.selectedCity?.id === cityId

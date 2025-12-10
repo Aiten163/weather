@@ -144,10 +144,10 @@ export const useWeatherStore = defineStore('weather', () => {
                 selectedCity.value = {
                     id: weather.id,
                     name: weather.name,
-                    country: weather.sys.country,
-                    coord: weather.coord,
-                    state: weather.sys?.state || '',
-                    hasRealId: true
+                    country: weather.sys?.country || '',
+                    coord: {
+                        lat: weather.coord?.lat || 0,
+                        lon: weather.coord?.lon || 0}
                 }
 
                 // Дополнительно сохраняем в localStorage

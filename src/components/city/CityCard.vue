@@ -106,7 +106,7 @@ const toggleFavorite = () => {
 
 const removeCity = () => {
   if (confirm(t('confirmRemove') || 'Remove this city?')) {
-    citiesStore.removeCity(props.city.id)
+    citiesStore.removeFromFavorites(props.city.id)
   }
 }
 

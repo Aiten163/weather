@@ -79,9 +79,10 @@ export interface City {
     id: number
     name: string
     country: string
-    coord: Coord
-    hasRealId?: boolean // Есть ли реальный ID OpenWeather
-    query?: string // Строка для поиска по имени
+    coord?: Coord  // опционально
+    lat?: number   // опционально
+    lon?: number   // опционально
+    state?: string // опционально
 }
 
 export interface DailyForecast {

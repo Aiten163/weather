@@ -1,5 +1,4 @@
 // src/composables/useTranslation.ts
-import { computed } from 'vue'
 import { useSettingsStore } from '@/store/settings'
 import { translations } from '@/locales/index'
 

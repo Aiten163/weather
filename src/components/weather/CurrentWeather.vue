@@ -195,7 +195,7 @@
                     </div>
                     <div class="detail-content">
                       <div class="detail-label">{{ t('pressure') }}</div>
-                      <div class="detail-value">{{ displayWeather.pressure }} hPa</div>
+                      <div class="detail-value">{{ displayWeather.pressure }} {{ t('hPa') }}</div>
                     </div>
                   </div>
 
@@ -320,14 +320,12 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
 import { useWeatherStore } from '@/store/weather'
-import { useCitiesStore } from '@/store/cities'
 import { useSettingsStore } from '@/store/settings'
 import { useTranslation } from '@/composables/useTranslation'
 import WeatherIcon from '@/components/weather/WeatherIcon.vue'
 import type { DailyForecast } from '@/types/weather'
 
 const weatherStore = useWeatherStore()
-const citiesStore = useCitiesStore()
 const settingsStore = useSettingsStore()
 const { t } = useTranslation()
 
@@ -528,14 +526,6 @@ const hourlyData = computed(() => {
   return []
 })
 
-const isCurrentFavorite = computed(() => {
-  if (!weatherStore.selectedCity) return false
-
-  const cityId = weatherStore.selectedCity.id
-  if (!cityId) return false
-
-  return citiesStore.isFavorite(cityId)
-})
 
 // Функции форматирования
 const formatTemperature = (temp: number) => {
@@ -558,21 +548,35 @@ const formatWindSpeed = (speed: number) => {
   const unit = settingsStore.windSpeedUnit
   switch (unit) {
     case 'kmh':
-      return `${Math.round(speed * 3.6)} km/h`
+      return `${Math.round(speed * 3.6)} ${t('kmh')}`
     case 'mph':
-      return `${Math.round(speed * 2.237)} mph`
+      return `${Math.round(speed * 2.237)} ${t('mph')}`
     case 'ms':
     default:
-      return `${Math.round(speed * 10) / 10} m/s`
+      return `${Math.round(speed * 10) / 10} ${t('ms')}`
   }
 }
 
 const formatVisibility = (meters: number) => {
-  if (settingsStore.language === 'en') {
+  const lang = settingsStore.language
+
+  if (meters >= 1000) {
     const km = meters / 1000
-    return `${km.toFixed(1)} km`
+    // Форматируем с точностью до одного знака после запятой
+    const formattedKm = km % 1 === 0 ? km.toFixed(0) : km.toFixed(1)
+
+    if (lang === 'ru') {
+      return `${formattedKm} км`
+    } else {
+      return `${formattedKm} km`
+    }
+  } else {
+    if (lang === 'ru') {
+      return `${meters} м`
+    } else {
+      return `${meters} m`
+    }
   }
-  return `${meters} m`
 }
 
 const getCurrentHumidity = () => {
@@ -718,72 +722,7 @@ const useDefaultCity = async () => {
   await weatherStore.loadWeatherData(524901)
 }
 
-const toggleFavorite = () => {
-  console.log('Toggle favorite called')
-  console.log('Selected city:', weatherStore.selectedCity)
-  console.log('Current weather:', weatherStore.currentWeather)
 
-  if (!weatherStore.selectedCity) {
-    console.error('No selected city to toggle favorite')
-    return
-  }
-
-  const cityToToggle = {
-    id: weatherStore.selectedCity.id,
-    name: weatherStore.selectedCity.name,
-    country: weatherStore.selectedCity.country,
-    lat: weatherStore.selectedCity.coord?.lat || weatherStore.selectedCity.lat,
-    lon: weatherStore.selectedCity.coord?.lon || weatherStore.selectedCity.lon,
-    state: weatherStore.selectedCity.state || ''
-  }
-
-  console.log('City to toggle:', cityToToggle)
-
-  // Используем метод toggleFavorite из citiesStore
-  citiesStore.toggleFavorite(cityToToggle)
-
-  // Или явно добавляем/удаляем:
-  // if (isCurrentFavorite.value) {
-  //   citiesStore.removeFromFavorites(cityToToggle.id)
-  // } else {
-  //   citiesStore.addToFavorites(cityToToggle)
-  // }
-
-  console.log('All favorites after toggle:', citiesStore.favoriteCities)
-}
-const getWeatherDescription = (description: string): string => {
-  const weatherDescriptions: Record<string, Record<string, string>> = {
-    en: {
-      'overcast clouds': 'Overcast',
-      'broken clouds': 'Broken clouds',
-      'scattered clouds': 'Scattered clouds',
-      'few clouds': 'Few clouds',
-      'clear sky': 'Clear sky',
-      'light rain': 'Light rain',
-      'moderate rain': 'Moderate rain',
-      'heavy rain': 'Heavy rain',
-      'light snow': 'Light snow',
-      'snow': 'Snow',
-      'thunderstorm with rain': 'Thunderstorm with rain',
-    },
-    ru: {
-      'overcast clouds': 'Пасмурно',
-      'broken clouds': 'Рассеянная облачность',
-      'scattered clouds': 'Переменная облачность',
-      'few clouds': 'Небольшая облачность',
-      'clear sky': 'Ясное небо',
-      'light rain': 'Небольшой дождь',
-      'moderate rain': 'Умеренный дождь',
-      'heavy rain': 'Сильный дождь',
-      'light snow': 'Небольшой снег',
-      'snow': 'Снег',
-      'thunderstorm with rain': 'Гроза с дождем',
-    }
-  }
-
-  const lang = settingsStore.language as keyof typeof weatherDescriptions
-  return weatherDescriptions[lang]?.[description] || description
-}
 </script>
 
 <style scoped>
