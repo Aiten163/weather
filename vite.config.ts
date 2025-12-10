@@ -1,30 +1,12 @@
 import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { resolve } from 'path'
+import vue from '@vuejs/plugin-vue'
 
-// https://vitejs.dev/config/
 export default defineConfig({
     plugins: [vue()],
-    base: '/weather/',
-    resolve: {
-        alias: {
-            '@': resolve(__dirname, 'src')
-        }
-    },
+    base: '/weather/', // Должно быть именно так
     build: {
         outDir: 'dist',
-        sourcemap: false,
-        rollupOptions: {
-            output: {
-                manualChunks: {
-                    vendor: ['vue', 'vue-router', 'pinia'],
-                    charts: ['chart.js', 'vue-chartjs'],
-                    bootstrap: ['bootstrap', 'bootstrap-icons']
-                }
-            }
-        }
-    },
-    server: {
-        port: 3000
+        assetsDir: 'assets',
+        emptyOutDir: true
     }
 })
