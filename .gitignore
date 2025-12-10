@@ -8,7 +8,6 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
 dist-ssr
 *.local
 
@@ -91,11 +90,13 @@ node_modules/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Vue / Vite
 .vite
-dist
+dist/assets
+dist/index.html
+dist/vite.svg
+
 .ssr
 
 # Stores Vite dependencies
